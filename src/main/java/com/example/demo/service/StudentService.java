@@ -16,30 +16,14 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     public Student findById(Integer id) {
         return studentRepository.findById(id).orElse(null);
     }
 
-    /**
-     *
-     * @param name
-     * @return
-     */
     public List<Student> findByNameLike(String name) {
         return studentRepository.findByNameLike(name);
     }
 
-    /**
-     *
-     * @param name
-     * @param password
-     * @return
-     */
     public List<Student> findByNameAndPassword(String name, String password) {
         return studentRepository.findByNameAndPassword(name, password);
     }
@@ -58,5 +42,9 @@ public class StudentService {
 
     public void Delete(Student student){
         studentRepository.delete(student);
+    }
+
+    public void DeleteById(Integer id){
+        studentRepository.deleteById(id);
     }
 }

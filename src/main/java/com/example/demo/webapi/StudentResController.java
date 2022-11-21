@@ -29,10 +29,11 @@ public class StudentResController {
         return student;
     }
 
-    @RequestMapping("/{name}")
+    @GetMapping("/{name}")
     public Student getByName(@PathVariable("name") String name){
         return studentService.findByName(name);
     }
+
 
     @PutMapping("/update")
     public Student update(Student student) {
@@ -43,4 +44,10 @@ public class StudentResController {
     public void delete(Student student) {
         studentService.Delete(student);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable("id") Integer id) {
+        studentService.DeleteById(id);
+    }
+
 }

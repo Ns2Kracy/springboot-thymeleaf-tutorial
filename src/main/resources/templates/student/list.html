@@ -9,19 +9,50 @@
 </head>
 
 <body>
+
+
+<!--    CurdBar  -->
     <div class="container-fluid">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            新增
-        </button>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">CRUD</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <button type="button" class="btn btn-default navbar-btn" onclick="addStudent()" data-toggle="Model" data-target="#myModel">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        New
+                    </button>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search" >
+                        </div>
+                        <button type="submit" class="btn btn-default" onclick="searchStudent()">Search</button>
+                    </form>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+<!--    学生表    -->
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>姓名</th>
                     <th>学号</th>
                     <th>性别</th>
                     <th>成绩</th>
                     <th>操作</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="studentTB">
@@ -29,6 +60,7 @@
         </table>
     </div>
 
+<!--    弹出的新增学生的表    -->
     <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -38,7 +70,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="student-form">
-                        <input hidden="hidden" id="id">
+                        <label for="id"></label><input hidden="hidden" id="id">
                         <div class="form-group">
                             <label for="name">姓名</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="name">
@@ -71,66 +103,10 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+
     <script src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-
-        function addStudent() {
-            let student = $("#student-form").serialize();
-            $.ajax({
-                url: "/webapi/student/insert",
-                type: "POST",
-                method: "POST",
-                data: student,
-                done: function () {
-                    loadTable();
-                    $("#myModal").modal("hide");
-                }
-            });
-        }
-
-        function editStudent(id) {
-            $("#myModal").modal("show");
-            $.ajax({
-                url: "/webapi/student/" + id,
-                type: "GET",
-                merge: "GET"
-            }).done(function (data) {
-                $(#id).val(data.id);
-                $(#name).val(data.name);
-                $(#password).val(data.password);
-                $(#no).val(data.no);
-                $(#sex).val(data.sex);
-                $(#score).val(data.score);
-            });
-        }
-
-        function loadTable() {
-            $.ajax({
-                url: "/webapi/student/list",
-                type: "GET",
-                method: "GET",
-            }).done(function (data) {
-                let len = data.length;
-                let html = "";
-                for (let i = 0; i < len; i++) {
-                    let item = data[i];
-                    html += "<tr>"
-                        + "<td>" + item.name + "</td>"
-                        + "<td>" + item.no + "</td>"
-                        + "<td>" + item.sex + "</td>"
-                        + "<td>" + item.score + "</td>"
-                        + "<td>" + "<a href='#' onclick='editStudent();'>" + "编辑" + "</a>" + "</td>"
-                        + "</tr>";
-                }
-                console.log(html);
-                $("#studentTB").html(html);
-            })
-        }
-
-        $(function (){
-            loadTable();
-        })
-    </script>
+    <script type="text/javascript" src="/scripts/script.js"></script>
 </body>
 
 </html>
