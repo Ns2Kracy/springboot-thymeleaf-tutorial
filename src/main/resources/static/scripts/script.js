@@ -1,65 +1,91 @@
-$(function (){
-    loadTable();
-})
-
-function addStudent(){
-    let student = $("#student-form").serialize();
-    $.ajax({
-        url: "/webapi/student/insert",
-        type: "POST",
-        data: student,
-        method: "POST",
-    }).done(function () {
-        $("#myModal").modal("hide");
-        loadTable();
-    });
+function saveStudent(){
+    let data=$("#save-form").serialize();
+    let id = $("#id").val();
+    if (id === ""){
+        $.ajax({
+            url:"/webapi/student/insert",
+            method:"POST",
+            data: data
+        }).done(function () {
+            loadTable();
+            $("#saveModal").modal('hide')
+        });
+    } else {
+        $.ajax({
+            url:"/webapi/student/update",
+            method:"POST",
+            data: data
+        }).done(function () {
+            loadTable();
+            $("#saveModal").modal('hide')
+        });
+    }
 }
 
-function searchStudent(param){
+function editStudent(param){
+    $("#saveModal").modal("show");
     $.ajax({
-        url: "/webapi/student/" + param,
-        type: "GET",
-        method: "GET",
-        success: returnList,
-    })
-}
-
-function editStudent(id){
-    $.ajax({
-        url: "/webapi/student" + id,
+        url: "/webapi/student/getid/" + param,
         type: "GET",
         method: "GET",
     }).done(function (data) {
-        $("#id").val(data.id);
+        $("#save-id").val(data.id);
         $("#name").val(data.name);
-        $("#password").val(data.password);
+        $("#password").val("");
         $("#no").val(data.no);
         $("#sex").val(data.sex);
         $("#score").val(data.score);
-        $("#myModal").modal("show");
+        loadTable()
     });
 }
 
 function deleteStudent(id){
+    if (confirm("确定删除吗？")){
+        $.ajax({
+            url: "/webapi/student/delete/" + id,
+            type: "DELETE",
+            data: id,
+            method: "DELETE",
+        }).done(function () {
+            alert("删除成功");
+            loadTable()
+        });
+    }
+}
+
+function findClick() {
+    let name = $("#findId").val();
+    findStudent(name);
+}
+
+function findStudent(name) {
     $.ajax({
-        url: "/webapi/student/delete/" + id,
-        type: "DELETE",
-        method: "DELETE",
-    }).done(function () {
-        alert("删除成功");
-        loadTable();
-    });
+        url: "/webapi/student/getid/" + name,
+        method:"get",
+    }).done(function (data) {
+        if (data.length === 0){
+            alert("没有找到");
+            loadTable();
+        } else {
+            $("#save-id").val(data[0].id);
+            $("#name").val(data[0].name);
+            $("#no").val(data[0].no);
+            $("#password").val("");
+            $("#sex").val(data[0].sex);
+            $("#score").val(data[0].score);
+        }
+    })
 }
 
 function loadTable(){
     $.ajax({
         url: "/webapi/student/list",
         type: "GET",
-        success: returnList,
+        success:studentList
     })
 }
 
-function returnList(data){
+function studentList(data){
     let len = data.length;
     let html = "";
     for (let i = 0; i < len; i++) {
@@ -72,11 +98,16 @@ function returnList(data){
             + "<td style='width: 17.5%'>" + item.score + "</td>"
             + "<td style='width: 20%'>" +
             "<button type='button' class='btn btn-primary' onclick='editStudent(" + item.id + ")' style='margin-right: 10px'>" +
-            "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" + "Edit" + "</button>" +
+            "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>" +
             "<button type='button' class='btn btn-danger' onclick='deleteStudent(" + item.id + ")'>" +
-            "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" + "Delete" + "</button>" +
+            "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>" +
             "</td>"
             + "</tr>";
     }
     $("#studentTB").html(html);
 }
+
+
+$(function (){
+    loadTable();
+})

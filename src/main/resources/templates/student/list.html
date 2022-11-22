@@ -9,10 +9,9 @@
 </head>
 
 <body>
-
-
 <!--    CurdBar  -->
     <div class="container-fluid">
+
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -24,19 +23,17 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">CRUD</a>
+                    <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#saveModal">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        New
+                    </button>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <button type="button" class="btn btn-default navbar-btn" onclick="addStudent()" data-toggle="Model" data-target="#myModel">
-                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                        New
-                    </button>
                     <form class="navbar-form navbar-left">
-                        <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" >
-                        </div>
-                        <button type="submit" class="btn btn-default" onclick="searchStudent()">Search</button>
+                        <input type="text" class="form-control" placeholder="Search" id="findId">
+                        <button type="submit" class="btn btn-default" onclick="findClick()">Search</button>
                     </form>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -52,7 +49,6 @@
                     <th>性别</th>
                     <th>成绩</th>
                     <th>操作</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody id="studentTB">
@@ -60,8 +56,7 @@
         </table>
     </div>
 
-<!--    弹出的新增学生的表    -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal fade" tabindex="-1" role="dialog" id="saveModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,8 +64,8 @@
                     <h4 class="modal-title">学生信息</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="student-form">
-                        <label for="id"></label><input hidden="hidden" id="id">
+                    <form id="save-form">
+                        <input hidden="hidden" id="id" name="id">
                         <div class="form-group">
                             <label for="name">姓名</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="name">
@@ -86,8 +81,8 @@
                         <div class="form-group">
                             <label for="sex">性别</label>
                             <select class="form-control" id="sex" name="sex">
-                                <option value="1">男</option>
-                                <option value="0">女</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -97,14 +92,53 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addStudent();">保存</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudent();">保存</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
 
-
-
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">学生信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update-form">
+                        <input hidden="hidden" id="update-id">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="no">学号</label>
+                            <input type="text" class="form-control" id="no" name="no" placeholder="no">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">性别</label>
+                            <select class="form-control" id="sex" name="sex">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="score">成绩</label>
+                            <input type="text" class="form-control" id="score" name="score" placeholder="score">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="updateStudent();">保存</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
     <script src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/scripts/script.js"></script>
 </body>

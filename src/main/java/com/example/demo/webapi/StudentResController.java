@@ -22,22 +22,31 @@ public class StudentResController {
         return studentService.Insert(student);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/getid/{id}")
     public Student getById(@PathVariable("id") Integer id) {
         Student student = studentService.findById(id);
         student.setPassword("");
         return student;
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/getname?name={name}")
     public Student getByName(@PathVariable("name") String name){
         return studentService.findByName(name);
     }
 
+    @GetMapping("/getno/{no}")
+    public Student getByNo(@PathVariable("no") String no){
+        return studentService.findByNo(no);
+    }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public Student update(Student student) {
-        return studentService.Update(student);
+        return studentService.Update(studentService.findById(student.getId()));
+    }
+
+    @PostMapping("/update/{id}")
+    public Student updateById(@PathVariable("id") Integer id) {
+        return studentService.updateById(id);
     }
 
     @DeleteMapping("/delete")

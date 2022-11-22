@@ -32,7 +32,7 @@ public class Student {
     /**
      * 性别
      */
-    private Integer sex;
+    private String sex;
 
     /**
      * 年龄

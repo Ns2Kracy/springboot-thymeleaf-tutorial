@@ -47,4 +47,12 @@ public class StudentService {
     public void DeleteById(Integer id){
         studentRepository.deleteById(id);
     }
+
+    public Student findByNo(String no) {
+        return studentRepository.findByNo(no);
+    }
+
+    public Student updateById(Integer id) {
+        return studentRepository.updateById(id);
+    }
 }

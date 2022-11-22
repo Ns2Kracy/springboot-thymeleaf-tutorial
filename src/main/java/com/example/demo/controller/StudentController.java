@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -24,11 +23,5 @@ public class StudentController {
         return "/student/list";
     }
 
-    @GetMapping("/student/{name}")
-    public String findByNameLike(Model model, @PathVariable String name) {
-        List<Student> students = studentService.findByNameLike(name);
-        model.addAttribute("students", students);
-        // 返回指定name的学生信息
-        return "/student/list";
-    }
+
 }
