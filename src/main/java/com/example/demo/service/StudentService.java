@@ -3,56 +3,36 @@ package com.example.demo.service;
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StudentService {
+public interface StudentService {
 
     @Autowired
-    private StudentRepository studentRepository;
 
-    public List<Student> findAll() {
-        return studentRepository.findAll();
-    }
+    List<Student> findAll();
+    Student findById(Integer id);
 
-    public Student findById(Integer id) {
-        return studentRepository.findById(id).orElse(null);
-    }
+    List<Student> findByNameLike(String name);
+    List<Student> findByNameAndPassword(String name, String password);
+    Student findByName(String name);
+    Student Insert(Student student);
+    Student Update(Student student);
 
-    public List<Student> findByNameLike(String name) {
-        return studentRepository.findByNameLike(name);
-    }
+    void Delete(Student student);
 
-    public List<Student> findByNameAndPassword(String name, String password) {
-        return studentRepository.findByNameAndPassword(name, password);
-    }
+    void DeleteById(Integer id);
 
-    public Student findByName(String name) {
-        return studentRepository.findByName(name);
-    }
+    Student findByNo(String no);
 
-    public Student Insert(Student student) {
-        return studentRepository.save(student);
-    }
+    Student updateById(Integer id);
 
-    public Student Update(Student student) {
-        return studentRepository.save(student);
-    }
+    Page<Student> findAll(Pageable pageable);
 
-    public void Delete(Student student){
-        studentRepository.delete(student);
-    }
+    public Page<Student> findAll(Example<Student> example, Pageable pageable);
 
-    public void DeleteById(Integer id){
-        studentRepository.deleteById(id);
-    }
-
-    public Student findByNo(String no) {
-        return studentRepository.findByNo(no);
-    }
-
-    public Student updateById(Integer id) {
-        return studentRepository.updateById(id);
-    }
 }

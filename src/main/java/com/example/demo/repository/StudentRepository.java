@@ -23,7 +23,16 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findByNo(String no);
 
     @Modifying
-    @Query(nativeQuery = true, value = "update student set name = {name}, set no = {}, set where id = {id}")
+    @Query(nativeQuery = true, value = "update student set name = {name}," +
+            "set no = {no}," +
+            "set sex = {sex}," +
+            "set score = {score} where id = {id}")
     Student updateById(Integer id);
 
+    @Modifying
+    @Query(nativeQuery = true, value = "update student set name = {name}," +
+            "set no = {no}," +
+            "set sex = {sex}," +
+            "set score = {score} where id = {id}")
+    Student Update(Student student);
 }

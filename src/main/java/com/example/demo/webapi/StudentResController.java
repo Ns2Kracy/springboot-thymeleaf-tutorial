@@ -1,9 +1,12 @@
 package com.example.demo.webapi;
 
+import com.example.demo.core.PageUtil;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -59,4 +62,31 @@ public class StudentResController {
         studentService.DeleteById(id);
     }
 
+    @GetMapping("/page")
+    public PageUtil getByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                              @RequestParam(value = "size", defaultValue = "10") Integer size,
+                              @RequestParam(value = "name", defaultValue = "") String name) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
+        Page<Student> studentPage;
+
+        if (StringUtils.isEmpty(name)) {
+            Pageable pageable = PageRequest.of(page, size, sort);
+            studentPage = studentService.findAll(pageable);
+        } else {
+            Student student = new Student();
+            student.setName(name);
+
+            Pageable pageable = PageRequest.of(0, 10, sort);
+
+            ExampleMatcher matcher = ExampleMatcher.
+                    matching().
+                    withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
+            Example<Student> example = Example.of(student, matcher);
+
+            studentPage = studentService.findAll(example, pageable);
+        }
+
+        return new PageUtil(studentPage.getContent(), studentPage.getTotalElements());
+    }
 }

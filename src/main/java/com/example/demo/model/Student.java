@@ -14,33 +14,15 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    /**
-     * 学号
-     */
     private String no;
 
-    /**
-     * 姓名
-     */
     private String name;
 
-    /**
-     * 密码
-     */
     private String password;
 
-    /**
-     * 性别
-     */
     private String sex;
 
-    /**
-     * 年龄
-     */
     private Integer age;
 
-    /**
-     * 分数
-     */
     private Integer score;
 }

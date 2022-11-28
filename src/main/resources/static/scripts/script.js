@@ -1,35 +1,102 @@
+$(function (){
+    loadTable();
+})
+
+function search(){
+    $("#studentTable").bootstrapTable("destroy");
+    loadTable()
+}
+
+function loadTable(){
+    $("#studentTable").bootstrapTable({
+        method: 'GET',
+        url: '/webapi/student/page',
+        iconSize: 'outline',
+        pageSize: 10,
+        pageNumber: 1,
+        pagination: true,
+        dataType: 'json',
+        singleSelect: false,
+        sidePagination: 'server',
+        queryParams: function (params) {
+            return {
+                size: params.limit,
+                page: params.offset / params.limit,
+                sort: 'id',
+                direct: 'desc',
+                name: $('#findByName').val()
+            };
+        },
+        columns: [{
+            field: 'id',
+            title: 'ID'
+        },{
+            field: 'name',
+            title: '姓名'
+        },{
+            field: 'no',
+            title: '学号'
+        },{
+            field: 'sex',
+            title: '性别'
+        },{
+            field: 'score',
+            title: '成绩'
+        },{
+            // 这里是操作按钮
+            title: '操作',
+            // 创建编辑和删除按钮
+            formatter: function (value, row) {
+                return '<button type="button" ' +
+                    'class="btn btn-primary" ' +
+                    'onclick="editStudent(' + row.id + ')" style="margin-right: 10px">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                    '</button>' +
+                    '<button ' +
+                    'class="btn btn-danger" ' +
+                    'onclick="deleteStudent(' + row.id + ')">' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
+                    '</button>';
+            }
+        }]
+    });
+}
+
 function saveStudent(){
-    let data=$("#save-form").serialize();
-    let id = $("#id").val();
-    if (id === ""){
-        $.ajax({
-            url:"/webapi/student/insert",
-            method:"POST",
-            data: data
-        }).done(function () {
-            loadTable();
-            $("#saveModal").modal('hide')
-        });
-    } else {
-        $.ajax({
-            url:"/webapi/student/update",
-            method:"POST",
-            data: data
-        }).done(function () {
-            loadTable();
-            $("#saveModal").modal('hide')
-        });
-    }
+    let data=$("#studentForm").serialize();
+
+    $.ajax({
+        url:"/webapi/student/insert",
+        method:"POST",
+        data: data
+    }).done(function () {
+        loadTable();
+        $("#studentModal").modal('hide')
+    });
+}
+
+function updateStudent() {
+    // 根据id更新
+    let data = $("#studentForm").serialize();
+    let id  = $("#studentId").val();
+    $.ajax({
+        url: "/webapi/student/update/" + id,
+        method: "POST",
+        data: data
+    }).done(function () {
+        loadTable();
+        $("#studentModal").modal('hide')
+    });
 }
 
 function editStudent(param){
-    $("#saveModal").modal("show");
+    $("#studentModal").modal("show");
     $.ajax({
         url: "/webapi/student/getid/" + param,
         type: "GET",
         method: "GET",
     }).done(function (data) {
-        $("#save-id").val(data.id);
+        $("#studentId").val(data.id);
         $("#name").val(data.name);
         $("#password").val("");
         $("#no").val(data.no);
@@ -52,62 +119,3 @@ function deleteStudent(id){
         });
     }
 }
-
-function findClick() {
-    let name = $("#findId").val();
-    findStudent(name);
-}
-
-function findStudent(name) {
-    $.ajax({
-        url: "/webapi/student/getid/" + name,
-        method:"get",
-    }).done(function (data) {
-        if (data.length === 0){
-            alert("没有找到");
-            loadTable();
-        } else {
-            $("#save-id").val(data[0].id);
-            $("#name").val(data[0].name);
-            $("#no").val(data[0].no);
-            $("#password").val("");
-            $("#sex").val(data[0].sex);
-            $("#score").val(data[0].score);
-        }
-    })
-}
-
-function loadTable(){
-    $.ajax({
-        url: "/webapi/student/list",
-        type: "GET",
-        success:studentList
-    })
-}
-
-function studentList(data){
-    let len = data.length;
-    let html = "";
-    for (let i = 0; i < len; i++) {
-        let item = data[i];
-        html += "<tr>"
-            + "<td style='width: 10%'>" + item.id + "</td>"
-            + "<td style='width: 17.5%'>" + item.name + "</td>"
-            + "<td style='width: 17.5%'>" + item.no + "</td>"
-            + "<td style='width: 17.5%'>" + item.sex + "</td>"
-            + "<td style='width: 17.5%'>" + item.score + "</td>"
-            + "<td style='width: 20%'>" +
-            "<button type='button' class='btn btn-primary' onclick='editStudent(" + item.id + ")' style='margin-right: 10px'>" +
-            "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>" +
-            "<button type='button' class='btn btn-danger' onclick='deleteStudent(" + item.id + ")'>" +
-            "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>" +
-            "</td>"
-            + "</tr>";
-    }
-    $("#studentTB").html(html);
-}
-
-
-$(function (){
-    loadTable();
-})
