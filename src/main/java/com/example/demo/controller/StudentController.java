@@ -12,6 +12,7 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+
     @GetMapping("/student/list")
     public String list(Model model) {
         List<Student> students = studentService.findAll();

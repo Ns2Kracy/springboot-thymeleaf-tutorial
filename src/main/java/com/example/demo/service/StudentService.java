@@ -13,12 +13,20 @@ import java.util.List;
 public interface StudentService {
     @Autowired
     List<Student> findAll();
+
     Student findById(Integer id);
+
     Student findByName(String name);
+
     Student insert(Student student);
+
     Student update(Student student);
+
     Student updateById(Integer id, Student student);
+
     void DeleteById(Integer id);
+
     Page<Student> findAll(Pageable pageable);
+
     public Page<Student> findAll(Example<Student> example, Pageable pageable);
 }

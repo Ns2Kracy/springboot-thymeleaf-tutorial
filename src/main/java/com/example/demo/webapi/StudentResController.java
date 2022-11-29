@@ -15,20 +15,24 @@ import java.util.List;
 public class StudentResController {
     @Autowired
     private StudentService studentService;
+
     @GetMapping("/list")
     public List<Student> getAll(){
         return studentService.findAll();
     }
+
     @PostMapping("/insert")
     public Student add(Student student) {
         return studentService.insert(student);
     }
+
     @GetMapping("/getid/{id}")
     public Student getById(@PathVariable("id") Integer id) {
         Student student = studentService.findById(id);
         student.setPassword("");
         return student;
     }
+
     @PutMapping("/update/{id}")
     public Student update(Student student) {
         Student oldstudent = studentService.findById(student.getId());
@@ -37,10 +41,12 @@ public class StudentResController {
         }
         return studentService.update(student);
     }
+
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable("id") Integer id) {
         studentService.DeleteById(id);
     }
+
     @GetMapping("/page")
     public PageUtil getByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
                               @RequestParam(value = "size", defaultValue = "10") Integer size,

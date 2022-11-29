@@ -1,5 +1,5 @@
-function search(){
-    $("#studentTable").bootstrapTable("destroy");
+function search() {
+    $('#studentTable').bootstrapTable("destroy");
     loadTable();
 }
 
@@ -58,7 +58,7 @@ function deleteStudent(id){
             method: "DELETE",
         }).done(function () {
             alert("删除成功");
-            loadTable()
+            $('#studentTable').bootstrapTable('refresh');
         });
     }
 }
@@ -67,13 +67,12 @@ function loadTable(){
     $("#studentTable").bootstrapTable({
         method: 'GET',
         url: '/webapi/student/page',
-        iconSize: 'outline',
+        striped: true,
+        pagination: true,
+        singleSelect: false,
         pageSize: 10,
         pageNumber: 1,
-        pagination: true,
-        dataType: 'json',
-        singleSelect: false,
-        sidePagination: 'server',
+        sidePagination: "server",
         queryParams: function (params) {
             return {
                 size: params.limit,
@@ -107,11 +106,13 @@ function loadTable(){
                     'class="btn btn-primary" ' +
                     'onclick="editStudent(' + row.id + ')" style="margin-right: 10px">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                    '编辑' +
                     '</button>' +
                     '<button ' +
                     'class="btn btn-danger" ' +
                     'onclick="deleteStudent(' + row.id + ')">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
+                    '删除' +
                     '</button>';
             }
         }]
