@@ -11,28 +11,14 @@ import java.util.List;
 
 @Service
 public interface StudentService {
-
     @Autowired
-
     List<Student> findAll();
     Student findById(Integer id);
-
-    List<Student> findByNameLike(String name);
-    List<Student> findByNameAndPassword(String name, String password);
     Student findByName(String name);
-    Student Insert(Student student);
-    Student Update(Student student);
-
-    void Delete(Student student);
-
+    Student insert(Student student);
+    Student update(Student student);
+    Student updateById(Integer id, Student student);
     void DeleteById(Integer id);
-
-    Student findByNo(String no);
-
-    Student updateById(Integer id);
-
     Page<Student> findAll(Pageable pageable);
-
     public Page<Student> findAll(Example<Student> example, Pageable pageable);
-
 }

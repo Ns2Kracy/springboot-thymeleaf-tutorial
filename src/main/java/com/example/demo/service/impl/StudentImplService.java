@@ -12,59 +12,36 @@ import java.util.List;
 
 @Service
 public class StudentImplService implements StudentService {
-
     @Autowired
     private StudentRepository studentRepository;
-
     public Page<Student> findAll(Pageable pageable) {
         return studentRepository.findAll(pageable);
     }
-
     public Page<Student> findAll(Example<Student> example, Pageable pageable) {
         return studentRepository.findAll(example, pageable);
     }
-
     public List<Student> findAll() {
         return studentRepository.findAll();
     }
-
     public Student findById(Integer id) {
         return studentRepository.findById(id).orElse(null);
     }
-
-    public List<Student> findByNameLike(String name) {
-        return studentRepository.findByNameLike(name);
-    }
-
-    public List<Student> findByNameAndPassword(String name, String password) {
-        return studentRepository.findByNameAndPassword(name, password);
-    }
-
     public Student findByName(String name) {
         return studentRepository.findByName(name);
     }
-
-    public Student Insert(Student student) {
+    public Student insert(Student student) {
         return studentRepository.save(student);
     }
-
-    public Student Update(Student student) {
-        return studentRepository.Update(student);
+    public Student update(Student student){
+        studentRepository.save(student);
+        return student;
     }
-
-    public void Delete(Student student){
-        studentRepository.delete(student);
+    public Student updateById(Integer id, Student student){
+        student.setId(id);
+        studentRepository.save(student);
+        return student;
     }
-
     public void DeleteById(Integer id){
         studentRepository.deleteById(id);
-    }
-
-    public Student findByNo(String no) {
-        return studentRepository.findByNo(no);
-    }
-
-    public Student updateById(Integer id) {
-        return studentRepository.updateById(id);
     }
 }

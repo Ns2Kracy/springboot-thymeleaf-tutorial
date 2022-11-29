@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 
 <head>
-    <title>Good Thymes Virtual Grocery</title>
+    <title>CRUD</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="/plugins/boostrap-table/bootstrap-table.min.css">
-<!--    <script src="/plugins/boostrap-table/bootstrap-table.min.js"></script>-->
-<!--    <script src="/plugins/boostrap-table/locale/bootstrap-table-zh-CN.min.js"></script>-->
 </head>
 
 <body>
-<!--    CurdBar  -->
     <div class="container-fluid">
-
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -26,13 +21,12 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">CRUD</a>
-                    <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#saveModal">
+                    <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#studentModal">
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                         New
                     </button>
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <form class="navbar-form navbar-left">
                         <div class="form-group">
@@ -40,11 +34,10 @@
                         </div>
                         <button type="submit" class="btn btn-default" onclick="search()">Search</button>
                     </form>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+                </div>
+            </div>
         </nav>
 
-<!--    学生表    -->
         <table class="table table-bordered" id="studentTable"></table>
     </div>
 
@@ -87,16 +80,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="saveStudent();">保存</button>
-                    <button type="button" class="btn btn-primary" onclick="updateStudent();">更新</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript" src="/scripts/script.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/plugins/boostrap-table/bootstrap-table.min.js"></script>
     <script src="/plugins/boostrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="/scripts/script.js"></script>
 </body>
 
 </html>

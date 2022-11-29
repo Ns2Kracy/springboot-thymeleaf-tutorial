@@ -19,49 +19,28 @@ public class StudentResController {
     public List<Student> getAll(){
         return studentService.findAll();
     }
-
     @PostMapping("/insert")
     public Student add(Student student) {
-        return studentService.Insert(student);
+        return studentService.insert(student);
     }
-
     @GetMapping("/getid/{id}")
     public Student getById(@PathVariable("id") Integer id) {
         Student student = studentService.findById(id);
         student.setPassword("");
         return student;
     }
-
-    @GetMapping("/getname?name={name}")
-    public Student getByName(@PathVariable("name") String name){
-        return studentService.findByName(name);
-    }
-
-    @GetMapping("/getno/{no}")
-    public Student getByNo(@PathVariable("no") String no){
-        return studentService.findByNo(no);
-    }
-
-    @PostMapping("/update")
+    @PutMapping("/update/{id}")
     public Student update(Student student) {
-        return studentService.Update(studentService.findById(student.getId()));
+        Student oldstudent = studentService.findById(student.getId());
+        if (StringUtils.isEmpty(student.getPassword())) {
+            student.setPassword(oldstudent.getPassword());
+        }
+        return studentService.update(student);
     }
-
-    @PostMapping("/update/{id}")
-    public Student updateById(@PathVariable("id") Integer id) {
-        return studentService.updateById(id);
-    }
-
-    @DeleteMapping("/delete")
-    public void delete(Student student) {
-        studentService.Delete(student);
-    }
-
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable("id") Integer id) {
         studentService.DeleteById(id);
     }
-
     @GetMapping("/page")
     public PageUtil getByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
                               @RequestParam(value = "size", defaultValue = "10") Integer size,
@@ -86,7 +65,6 @@ public class StudentResController {
 
             studentPage = studentService.findAll(example, pageable);
         }
-
         return new PageUtil(studentPage.getContent(), studentPage.getTotalElements());
     }
 }

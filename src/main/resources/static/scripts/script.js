@@ -1,10 +1,66 @@
-$(function (){
-    loadTable();
-})
-
 function search(){
     $("#studentTable").bootstrapTable("destroy");
-    loadTable()
+    loadTable();
+}
+
+function saveStudent(){
+    $("#studentModal").modal("show");
+    let data=$("#studentForm").serialize();
+    let id = $("#studentId").val();
+    if (id < 1) {//新增
+        $.ajax({
+            url: "/webapi/student/insert",
+            method: "post",
+            data: data
+        }).done(function () {
+            loadTable();
+            $('#studentTable').bootstrapTable('refresh');
+            $("#studentModal").modal('hide')
+        })
+    } else {
+        //更新
+        $.ajax({
+            url: "/webapi/student/update/" + id,
+            method: "put",
+            data: data
+        }).done(function () {
+            loadTable();
+            $('#studentTable').bootstrapTable('refresh');
+            $("#studentModal").modal('hide')
+        })
+    }
+}
+
+function editStudent(id){
+    let data=$("#studentForm").serialize();
+    $("#studentModal").modal("show");
+    $.ajax({
+        url: "/webapi/student/getid/" + id,
+        type: "GET",
+        method: "GET",
+        data: data
+    }).done(function (data) {
+        $("#studentId").val(data.id);
+        $("#name").val(data.name);
+        $("#password").val("");
+        $("#no").val(data.no);
+        $("#sex").val(data.sex);
+        $("#score").val(data.score);
+    });
+}
+
+function deleteStudent(id){
+    if (confirm("确定删除吗？")){
+        $.ajax({
+            url: "/webapi/student/delete/" + id,
+            type: "DELETE",
+            data: id,
+            method: "DELETE",
+        }).done(function () {
+            alert("删除成功");
+            loadTable()
+        });
+    }
 }
 
 function loadTable(){
@@ -62,60 +118,6 @@ function loadTable(){
     });
 }
 
-function saveStudent(){
-    let data=$("#studentForm").serialize();
-
-    $.ajax({
-        url:"/webapi/student/insert",
-        method:"POST",
-        data: data
-    }).done(function () {
-        loadTable();
-        $("#studentModal").modal('hide')
-    });
-}
-
-function updateStudent() {
-    // 根据id更新
-    let data = $("#studentForm").serialize();
-    let id  = $("#studentId").val();
-    $.ajax({
-        url: "/webapi/student/update/" + id,
-        method: "POST",
-        data: data
-    }).done(function () {
-        loadTable();
-        $("#studentModal").modal('hide')
-    });
-}
-
-function editStudent(param){
-    $("#studentModal").modal("show");
-    $.ajax({
-        url: "/webapi/student/getid/" + param,
-        type: "GET",
-        method: "GET",
-    }).done(function (data) {
-        $("#studentId").val(data.id);
-        $("#name").val(data.name);
-        $("#password").val("");
-        $("#no").val(data.no);
-        $("#sex").val(data.sex);
-        $("#score").val(data.score);
-        loadTable()
-    });
-}
-
-function deleteStudent(id){
-    if (confirm("确定删除吗？")){
-        $.ajax({
-            url: "/webapi/student/delete/" + id,
-            type: "DELETE",
-            data: id,
-            method: "DELETE",
-        }).done(function () {
-            alert("删除成功");
-            loadTable()
-        });
-    }
-}
+$(function (){
+    loadTable();
+})
