@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.REnum;
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
@@ -52,5 +53,14 @@ public class StudentImplService implements StudentService {
 
     public void DeleteById(Integer id){
         studentRepository.deleteById(id);
+    }
+
+    public Student findByNameAndPassword(String name, String password) throws Exception {
+        List<Student> students = studentRepository.findByNameAndPassword(name, password);
+        if (students.size() > 0) {
+            return students.get(0);
+        } else {
+            throw new Exception(String.valueOf(REnum.LOGIN_ERROR));
+        }
     }
 }

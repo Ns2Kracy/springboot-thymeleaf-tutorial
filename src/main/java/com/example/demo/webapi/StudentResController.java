@@ -1,6 +1,6 @@
 package com.example.demo.webapi;
 
-import com.example.demo.core.PageUtil;
+import com.example.demo.utils.PageUtil;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -29,4 +29,6 @@ public interface StudentService {
     Page<Student> findAll(Pageable pageable);
 
     public Page<Student> findAll(Example<Student> example, Pageable pageable);
+
+    public Student findByNameAndPassword(String name, String password) throws Exception;
 }
