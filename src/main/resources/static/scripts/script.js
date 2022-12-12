@@ -9,7 +9,7 @@ function saveStudent(){
     let id = $("#studentId").val();
     if (id < 1) {//新增
         $.ajax({
-            url: "/webapi/student/insert",
+            url: "/api/student/insert",
             method: "post",
             data: data
         }).done(function () {
@@ -20,7 +20,7 @@ function saveStudent(){
     } else {
         //更新
         $.ajax({
-            url: "/webapi/student/update/" + id,
+            url: "/api/student/update/" + id,
             method: "put",
             data: data
         }).done(function () {
@@ -35,7 +35,7 @@ function editStudent(id){
     let data=$("#studentForm").serialize();
     $("#studentModal").modal("show");
     $.ajax({
-        url: "/webapi/student/getid/" + id,
+        url: "/api/student/getid/" + id,
         type: "GET",
         method: "GET",
         data: data
@@ -52,7 +52,7 @@ function editStudent(id){
 function deleteStudent(id){
     if (confirm("确定删除吗？")){
         $.ajax({
-            url: "/webapi/student/delete/" + id,
+            url: "/api/student/delete/" + id,
             type: "DELETE",
             data: id,
             method: "DELETE",
@@ -66,7 +66,7 @@ function deleteStudent(id){
 function loadTable(){
     $("#studentTable").bootstrapTable({
         method: 'GET',
-        url: '/webapi/student/page',
+        url: '/api/student/page',
         striped: true,
         pagination: true,
         singleSelect: false,

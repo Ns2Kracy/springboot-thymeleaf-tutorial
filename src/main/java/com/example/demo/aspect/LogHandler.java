@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 public class LogHandler {
-    @Pointcut("execution(public * com.example.demo.webapi.StudentResController.*(..))")
+    @Pointcut("execution(public * com.example.demo.api.StudentApiController.*(..))")
     public void log() {}
 
     @Before("log()")
