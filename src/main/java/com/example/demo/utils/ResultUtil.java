@@ -1,7 +1,7 @@
 package com.example.demo.utils;
 
 import com.example.demo.exception.REnum;
-import com.example.demo.vo.Result;
+import com.example.demo.model.Result;
 
 public class ResultUtil {
 

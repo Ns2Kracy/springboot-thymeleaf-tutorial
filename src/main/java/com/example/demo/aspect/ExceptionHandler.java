@@ -3,7 +3,7 @@ package com.example.demo.aspect;
 import com.example.demo.exception.REnum;
 import com.example.demo.exception.RException;
 import com.example.demo.utils.ResultUtil;
-import com.example.demo.vo.Result;
+import com.example.demo.model.Result;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
