@@ -4,11 +4,11 @@ public enum REnum {
     SUCCESS(0, "success"),
     ERROR(500, "error"),
     LOGIN_ERROR(1001, "login error"),
-    UNKONW_ERROR(1002, "unkonw error"),
+    UNKNOWN_ERROR(1002, "unknown error"),
     COMMON_ERROR(1003, "common error");
 
-    private Integer code;
-    private String msg;
+    private final Integer code;
+    private final String msg;
 
     REnum(Integer code, String msg) {
         this.code = code;

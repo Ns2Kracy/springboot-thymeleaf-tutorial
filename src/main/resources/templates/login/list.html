@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CRUD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="/plugins/boostrap-table/bootstrap-table.min.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">CRUD</a>
+                    <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#studentModal">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        New
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <label for="findByName"></label><input type="text" class="form-control" id="findByName" placeholder="Name" name="findByName">
+                        </div>
+                        <button type="submit" class="btn btn-default" onclick="search();return false">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <table class="table table-bordered" id="studentTable"></table>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="studentModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">学生信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="studentForm">
+                        <label for="studentId"></label><input hidden="hidden" id="studentId" name="studentId">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="no">学号</label>
+                            <input type="text" class="form-control" id="no" name="no" placeholder="no">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">性别</label>
+                            <select class="form-control" id="sex" name="sex">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="score">成绩</label>
+                            <input type="text" class="form-control" id="score" name="score" placeholder="score">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveStudent();">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/plugins/boostrap-table/bootstrap-table.min.js"></script>
+    <script src="/plugins/boostrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="/scripts/script.js"></script>
+</body>
+
+</html>

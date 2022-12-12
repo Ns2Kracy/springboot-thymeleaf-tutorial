@@ -1,7 +1,9 @@
 package com.example.demo.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class RException extends RuntimeException {
     private Integer code;
@@ -15,6 +17,4 @@ public class RException extends RuntimeException {
         super(rEnum.getMsg());
         this.code = rEnum.getCode();
     }
-
-
 }
